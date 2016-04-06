@@ -1,0 +1,31 @@
+{
+    "name": "weew/php-console-app",
+    "description": "Integrates weew/php-app with weew/php-console",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Maxim Kott",
+            "email": "maximkott@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "tests\\": "tests/"
+        }
+    },
+    "require": {
+        "weew/php-console-container-aware": "^1.0",
+        "weew/php-app": "^2.1"
+    },
+    "require-dev": {
+        "satooshi/php-coveralls": "^0.6.1",
+        "phpspec/phpspec": "^2.4",
+        "weew/php-helpers-phpspec": "^1.0",
+        "henrikbjorn/phpspec-code-coverage": "^2.0"
+    }
+}
