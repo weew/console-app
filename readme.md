@@ -22,6 +22,13 @@ Just create a new instance and your ready to go.
 
 ```php
 $app = new ConsoleApp();
+
 // returns IConsole
 $app->getConsole();
+
+// start app
+$app->start();
+
+// run console
+$app->parseArgv($argv);
 ```
