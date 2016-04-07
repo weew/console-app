@@ -5,6 +5,7 @@ namespace Weew\ConsoleApp;
 use Weew\App\App;
 use Weew\Console\ContainerAware\Console;
 use Weew\Console\IConsole;
+use Weew\ConsoleApp\Commands\ConfigDumpCommand;
 
 class ConsoleApp extends App implements IConsoleApp {
     /**
@@ -24,6 +25,8 @@ class ConsoleApp extends App implements IConsoleApp {
 
         $this->container->set([ConsoleApp::class, IConsoleApp::class], $this);
         $this->container->set([Console::class, IConsole::class], $this->console);
+
+        $this->addDefaultCommands();
     }
 
     /**
@@ -59,5 +62,14 @@ class ConsoleApp extends App implements IConsoleApp {
      */
     protected function createConsole() {
         return new Console($this->getContainer());
+    }
+
+    /**
+     * Register default commands.
+     */
+    protected function addDefaultCommands() {
+        $this->getConsole()->addCommands([
+            ConfigDumpCommand::class,
+        ]);
     }
 }
