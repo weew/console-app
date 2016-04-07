@@ -7,9 +7,18 @@ use Weew\Console\IInput;
 use Weew\Console\IOutput;
 use Weew\ConsoleArguments\ArgumentType;
 use Weew\ConsoleArguments\ICommand;
-use Weew\ConsoleArguments\OptionType;
 
 class ConfigDumpCommand {
+    /**
+     * @var IOutput
+     */
+    private $input;
+
+    /**
+     * @var IOutput
+     */
+    private $output;
+
     /**
      * @param ICommand $command
      */
@@ -17,11 +26,27 @@ class ConfigDumpCommand {
         $command->setName('config:dump')
             ->setDescription('Dump configuration');
 
-        $command->argument(ArgumentType::SINGLE_OPTIONAL, 'node')
+        $command->argument(ArgumentType::SINGLE_OPTIONAL, 'search')
             ->setDescription('Config node name to dump');
 
-        $command->option(OptionType::BOOLEAN, '--flat')
-            ->setDescription('Flatten config tree');
+        $command->setHelp(<<<EOT
+You can dump all config with
+ <keyword>config:dump</keyword>
+
+You can filter config by key
+ <keyword>config:dump keyword</keyword>
+
+This will match a config starting with "<yellow>keyword</yellow>"
+ <keyword>config:dump keyword*</keyword>
+
+This will match a config ending with "<yellow>keyword</yellow>"
+ <keyword>config:dump *keyword</keyword>
+
+This will match everything that has "<yellow>keyword</yellow>" somewhere in the string
+ <keyword>config:dump *keyword*</keyword>
+
+EOT
+        );
     }
 
     /**
@@ -30,49 +55,53 @@ class ConfigDumpCommand {
      * @param IConfig $config
      */
     public function run(IInput $input, IOutput $output, IConfig $config) {
+        $this->input = $input;
+        $this->output = $output;
+
         $config = $config->toArray();
-        $node = $input->getArgument('node');
-        $flat = $input->getOption('--flat');
-
-        if ($node !== null) {
-            $config = array_get($config, $node, []);
-
-            if ( ! is_array($config)) {
-                $config = [$config];
-            }
-        }
-
-        if ($flat) {
-            $config = array_dot($config);
-        }
-
+        $search = $input->getArgument('search');
+        $config = array_dot($config);
         ksort($config);
 
-        $output->writeLine(" <header>Config:</header>");
+        if ($search !== null) {
+            $config = $this->findConfig($config, $search);
+        }
+
+        $this->output->writeLine(" <header>Config:</header>");
 
         if (count($config)) {
-            $this->renderConfig($output, $config);
+            $this->renderConfig($config);
         } else {
-            $output->writeLineIndented('There is no config yet');
+            $output->writeLineIndented('No configuration found');
         }
     }
 
     /**
-     * @param IOutput $output
      * @param array $config
-     * @param int $level
-     * @param int $baseIndent
+     * @param $search
+     *
+     * @return array
      */
-    private function renderConfig(IOutput $output, array $config, $level = 1, $baseIndent = 2) {
-        $indent = $level * $baseIndent;
+    private function findConfig(array $config, $search) {
+        $filteredConfig = [];
+        $search = preg_quote($search);
+        $search = str_replace('\*', '(.*)', $search);
 
         foreach ($config as $key => $value) {
-            if (is_array($value)) {
-                $output->writeLineIndented("<green>$key</green>: ", $indent);
-                $this->renderConfig($output, $value, $level + 1, $baseIndent);
-            } else {
-                $output->writeLineIndented("<green>$key</green>: $value", $indent);
+            if (preg_match("#^$search#", $key) === 1) {
+                $filteredConfig[$key] = $value;
             }
+        }
+
+        return $filteredConfig;
+    }
+
+    /**
+     * @param array $config
+     */
+    private function renderConfig(array $config) {
+        foreach ($config as $key => $value) {
+            $this->output->writeLineIndented("<green>$key</green>: $value");
         }
     }
 }
