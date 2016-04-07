@@ -53,7 +53,19 @@ class ConfigDumpCommandSpec extends ObjectBehavior {
         $output = new Output();
         $output->setEnableBuffering(true);
         $config = new Config();
-        $config->set('some', ['nested' => ['value']]);
+        $config->set('some', ['nested' => 'value']);
+
+        $this->run($input, $output, $config);
+    }
+
+    function it_dumps_a_single_non_array_node(Input $input) {
+        $input->getOption('--flat')->willReturn(true);
+        $input->getArgument('node')->willReturn('some.nested.value');
+
+        $output = new Output();
+        $output->setEnableBuffering(true);
+        $config = new Config();
+        $config->set('some', ['nested' => 'value']);
 
         $this->run($input, $output, $config);
     }

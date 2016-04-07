@@ -35,7 +35,11 @@ class ConfigDumpCommand {
         $flat = $input->getOption('--flat');
 
         if ($node !== null) {
-            $config = array_get($config, $node);
+            $config = array_get($config, $node, []);
+
+            if ( ! is_array($config)) {
+                $config = [$config];
+            }
         }
 
         if ($flat) {
