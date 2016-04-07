@@ -23,6 +23,7 @@ class ConsoleApp extends App implements IConsoleApp {
         $this->console = $this->createConsole();
 
         $this->container->set([ConsoleApp::class, IConsoleApp::class], $this);
+        $this->container->set([Console::class, IConsole::class], $this->console);
     }
 
     /**

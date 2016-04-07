@@ -5,7 +5,9 @@ namespace tests\spec\Weew\ConsoleApp;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Weew\Console\ContainerAware\Console;
+use Weew\Console\IConsole;
 use Weew\ConsoleApp\ConsoleApp;
+use Weew\ConsoleApp\IConsoleApp;
 
 /**
  * @mixin ConsoleApp
@@ -13,6 +15,13 @@ use Weew\ConsoleApp\ConsoleApp;
 class ConsoleAppSpec extends ObjectBehavior {
     function it_is_initializable() {
         $this->shouldHaveType(ConsoleApp::class);
+    }
+
+    function it_shares_instances_in_the_container() {
+        $this->getContainer()->has(IConsoleApp::class)->shouldBe(true);
+        $this->getContainer()->has(ConsoleApp::class)->shouldBe(true);
+        $this->getContainer()->has(IConsole::class)->shouldBe(true);
+        $this->getContainer()->has(Console::class)->shouldBe(true);
     }
 
     function it_returns_console() {
