@@ -5,7 +5,6 @@ namespace Weew\ConsoleApp\Commands;
 use Weew\Console\IInput;
 use Weew\Console\IOutput;
 use Weew\ConsoleApp\IConsoleApp;
-use Weew\ConsoleArguments\ArgumentType;
 use Weew\ConsoleArguments\ICommand;
 use Weew\ConsoleArguments\OptionType;
 
@@ -15,7 +14,6 @@ class GlobalEnvironmentCommand {
      */
     public function setup(ICommand $command) {
         $command->setGlobal(true)->setHidden(true);
-        $command->argument(ArgumentType::MULTIPLE_OPTIONAL, 'args');
         $command->option(OptionType::SINGLE_OPTIONAL, '--env')
             ->setDescription('Set application environment');
     }
