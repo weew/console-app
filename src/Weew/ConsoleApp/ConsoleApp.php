@@ -6,6 +6,7 @@ use Weew\App\App;
 use Weew\Console\ContainerAware\Console;
 use Weew\Console\IConsole;
 use Weew\ConsoleApp\Commands\ConfigDumpCommand;
+use Weew\ConsoleApp\Commands\GlobalEnvironmentCommand;
 
 class ConsoleApp extends App implements IConsoleApp {
     /**
@@ -70,6 +71,7 @@ class ConsoleApp extends App implements IConsoleApp {
     protected function addDefaultCommands() {
         $this->getConsole()->addCommands([
             ConfigDumpCommand::class,
+            GlobalEnvironmentCommand::class,
         ]);
     }
 }
