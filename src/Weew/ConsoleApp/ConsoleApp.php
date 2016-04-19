@@ -41,6 +41,7 @@ class ConsoleApp extends App implements IConsoleApp {
      * @param array $argv
      */
     public function parseArgv(array $argv = null) {
+        $this->start();
         $this->console->parseArgv($argv);
     }
 
@@ -48,6 +49,7 @@ class ConsoleApp extends App implements IConsoleApp {
      * @param array $args
      */
     public function parseArgs(array $args) {
+        $this->start();
         $this->console->parseArgs($args);
     }
 
@@ -55,6 +57,7 @@ class ConsoleApp extends App implements IConsoleApp {
      * @param $string
      */
     public function parseString($string) {
+        $this->start();
         $this->console->parseString($string);
     }
 
