@@ -84,7 +84,6 @@ class ConsoleApp extends App implements IConsoleApp {
      */
     protected function addDefaultCommands() {
         $this->getConsole()->addCommands([
-            ConfigDumpCommand::class,
             GlobalEnvironmentCommand::class,
         ]);
     }
