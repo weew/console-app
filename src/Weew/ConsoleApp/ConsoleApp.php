@@ -104,7 +104,7 @@ class ConsoleApp extends App implements IConsoleApp {
      * @param IOption $option
      */
     protected function detectEnvFromOption(IOption $option) {
-        if ($option->hasValue()) {
+        if ($option->hasValue() && $this->getConfig()->get('environment_aware') === true) {
             $this->setEnvironment($option->getValue());
         }
     }

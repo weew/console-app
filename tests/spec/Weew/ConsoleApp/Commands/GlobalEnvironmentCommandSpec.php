@@ -25,15 +25,7 @@ class GlobalEnvironmentCommandSpec extends ObjectBehavior {
         it($command->isHidden())->shouldBe(true);
     }
 
-    function it_does_nothing_without_flag(IInput $input, IOutput $output, IConsoleApp $app) {
-        $input->hasOption('--env')->willReturn(false);
-        $this->run($input, $output, $app);
-    }
-
-    function it_detects_environment(IInput $input, IOutput $output, IConsoleApp $app) {
-        $input->hasOption('--env')->willReturn(true);
-        $input->getOption('--env')->willReturn('env');
-        $app->setEnvironment('env')->shouldBeCalled();
+    function it_runs(IInput $input, IOutput $output, IConsoleApp $app) {
         $this->run($input, $output, $app);
     }
 }

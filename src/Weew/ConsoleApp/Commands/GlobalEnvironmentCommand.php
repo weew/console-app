@@ -24,9 +24,7 @@ class GlobalEnvironmentCommand {
      * @param IConsoleApp $app
      */
     public function run(IInput $input, IOutput $output, IConsoleApp $app) {
-        if ($input->hasOption('--env')) {
-            $env = $input->getOption('--env');
-            $app->setEnvironment($env);
-        }
+        // this command is only for show; the whole environment detection
+        // is done inside the console application
     }
 }

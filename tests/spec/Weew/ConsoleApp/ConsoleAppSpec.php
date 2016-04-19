@@ -51,8 +51,16 @@ class ConsoleAppSpec extends ObjectBehavior {
 
     function it_switches_environment() {
         $container = $this->getContainer();
+        $this->getConfig()->set('environment_aware', true);
         $this->parseString('--env=dev');
         $this->getEnvironment()->shouldBe('dev');
         $this->getContainer()->shouldNotBe($container);
+    }
+
+    function it_does_not_switch_environment_if_environment_awareness_has_not_been_configured() {
+        $container = $this->getContainer();
+        $this->parseString('--env=dev');
+        $this->getEnvironment()->shouldBe('prod');
+        $this->getContainer()->shouldBe($container);
     }
 }
