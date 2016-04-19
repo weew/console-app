@@ -29,7 +29,7 @@ class ConfigDumpCommandSpec extends ObjectBehavior {
         $output = new Output();
         $output->setEnableBuffering(true);
         $config = new Config();
-        $config->set('some', ['nested' => ['value']]);
+        $config->set('some', ['nested' => ['value'], 'boolean1' => true, 'boolean2' => false]);
 
         $this->run($input, $output, $config);
     }

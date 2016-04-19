@@ -101,6 +101,12 @@ EOT
      */
     private function renderConfig(array $config) {
         foreach ($config as $key => $value) {
+            if ($value === true) {
+                $value = 'true';
+            } else if ($value === false) {
+                $value = 'false';
+            }
+
             $this->output->writeLineIndented("<green>$key</green>: $value");
         }
     }
