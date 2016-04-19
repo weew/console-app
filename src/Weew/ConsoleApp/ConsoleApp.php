@@ -18,18 +18,14 @@ class ConsoleApp extends App implements IConsoleApp {
     protected $console;
 
     /**
-     * ConsoleApp constructor.
-     *
-     * @param null $environment
+     * @param $environment
      */
-    public function __construct($environment = null) {
-        parent::__construct($environment);
+    protected function init($environment) {
+        parent::init($environment);
 
         $this->console = $this->createConsole();
-
         $this->container->set([ConsoleApp::class, IConsoleApp::class], $this);
         $this->container->set([Console::class, IConsole::class], $this->console);
-
         $this->addDefaultCommands();
     }
 
