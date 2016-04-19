@@ -48,4 +48,11 @@ class ConsoleAppSpec extends ObjectBehavior {
         $this->getConsole()->getOutput()->setEnableBuffering(true);
         $this->getEnvironment()->shouldBe('prod');
     }
+
+    function it_switches_environment() {
+        $container = $this->getContainer();
+        $this->parseString('--env=dev');
+        $this->getEnvironment()->shouldBe('dev');
+        $this->getContainer()->shouldNotBe($container);
+    }
 }

@@ -7,6 +7,9 @@ use Weew\Console\ContainerAware\Console;
 use Weew\Console\IConsole;
 use Weew\ConsoleApp\Commands\ConfigDumpCommand;
 use Weew\ConsoleApp\Commands\GlobalEnvironmentCommand;
+use Weew\ConsoleArguments\IOption;
+use Weew\ConsoleArguments\Option;
+use Weew\ConsoleArguments\OptionType;
 
 class ConsoleApp extends App implements IConsoleApp {
     /**
@@ -41,6 +44,10 @@ class ConsoleApp extends App implements IConsoleApp {
      * @param array $argv
      */
     public function parseArgv(array $argv = null) {
+        $option = $this->createEnvOption();
+        $option->parseArgv($argv);
+        $this->detectEnvFromOption($option);
+
         $this->start();
         $this->console->parseArgv($argv);
     }
@@ -49,6 +56,10 @@ class ConsoleApp extends App implements IConsoleApp {
      * @param array $args
      */
     public function parseArgs(array $args) {
+        $option = $this->createEnvOption();
+        $option->parseArgs($args);
+        $this->detectEnvFromOption($option);
+
         $this->start();
         $this->console->parseArgs($args);
     }
@@ -57,6 +68,10 @@ class ConsoleApp extends App implements IConsoleApp {
      * @param $string
      */
     public function parseString($string) {
+        $option = $this->createEnvOption();
+        $option->parseString($string);
+        $this->detectEnvFromOption($option);
+
         $this->start();
         $this->console->parseString($string);
     }
@@ -76,5 +91,21 @@ class ConsoleApp extends App implements IConsoleApp {
             ConfigDumpCommand::class,
             GlobalEnvironmentCommand::class,
         ]);
+    }
+
+    /**
+     * @return Option
+     */
+    protected function createEnvOption() {
+        return new Option(OptionType::SINGLE_OPTIONAL, '--env');
+    }
+
+    /**
+     * @param IOption $option
+     */
+    protected function detectEnvFromOption(IOption $option) {
+        if ($option->hasValue()) {
+            $this->setEnvironment($option->getValue());
+        }
     }
 }
