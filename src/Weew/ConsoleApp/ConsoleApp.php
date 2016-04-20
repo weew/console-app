@@ -18,10 +18,13 @@ class ConsoleApp extends App implements IConsoleApp {
     protected $console;
 
     /**
-     * @param $environment
+     * ConsoleApp constructor.
+     *
+     * @param string $environment
+     * @param bool $debug
      */
-    protected function init($environment) {
-        parent::init($environment);
+    public function __construct($environment = null, $debug = null) {
+        parent::__construct($environment, $debug);
 
         $this->console = $this->createConsole();
         $this->container->set([ConsoleApp::class, IConsoleApp::class], $this);
@@ -40,6 +43,7 @@ class ConsoleApp extends App implements IConsoleApp {
      * @param array $argv
      */
     public function parseArgv(array $argv = null) {
+        $this->boot();
         $option = $this->createEnvOption();
         $option->parseArgv($argv);
         $this->detectEnvFromOption($option);
@@ -52,6 +56,7 @@ class ConsoleApp extends App implements IConsoleApp {
      * @param array $args
      */
     public function parseArgs(array $args) {
+        $this->boot();
         $option = $this->createEnvOption();
         $option->parseArgs($args);
         $this->detectEnvFromOption($option);
@@ -64,6 +69,7 @@ class ConsoleApp extends App implements IConsoleApp {
      * @param $string
      */
     public function parseString($string) {
+        $this->boot();
         $option = $this->createEnvOption();
         $option->parseString($string);
         $this->detectEnvFromOption($option);
@@ -99,7 +105,7 @@ class ConsoleApp extends App implements IConsoleApp {
      * @param IOption $option
      */
     protected function detectEnvFromOption(IOption $option) {
-        if ($option->hasValue() && $this->getConfig()->get('environment_aware') === true) {
+        if ($this->getDebug() && $option->hasValue() && ! $this->started) {
             $this->setEnvironment($option->getValue());
         }
     }

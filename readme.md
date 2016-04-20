@@ -32,3 +32,5 @@ $app->start();
 // run console
 $app->parseArgv($argv);
 ```
+
+Be aware that the `--env` switch is only available if debug mode has been enabled.
