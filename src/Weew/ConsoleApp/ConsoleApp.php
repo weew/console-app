@@ -43,7 +43,6 @@ class ConsoleApp extends App implements IConsoleApp {
      * @param array $argv
      */
     public function parseArgv(array $argv = null) {
-        $this->boot();
         $option = $this->createEnvOption();
         $option->parseArgv($argv);
         $this->detectEnvFromOption($option);
@@ -56,7 +55,6 @@ class ConsoleApp extends App implements IConsoleApp {
      * @param array $args
      */
     public function parseArgs(array $args) {
-        $this->boot();
         $option = $this->createEnvOption();
         $option->parseArgs($args);
         $this->detectEnvFromOption($option);
@@ -69,7 +67,6 @@ class ConsoleApp extends App implements IConsoleApp {
      * @param $string
      */
     public function parseString($string) {
-        $this->boot();
         $option = $this->createEnvOption();
         $option->parseString($string);
         $this->detectEnvFromOption($option);
