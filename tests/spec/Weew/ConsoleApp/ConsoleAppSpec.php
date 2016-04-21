@@ -30,17 +30,17 @@ class ConsoleAppSpec extends ObjectBehavior {
 
     function it_parses_args() {
         $this->getConsole()->getOutput()->setEnableBuffering(true);
-        $this->parseArgs([]);
+        $this->handleArgs([]);
     }
 
     function it_parses_argv() {
         $this->getConsole()->getOutput()->setEnableBuffering(true);
-        $this->parseArgv([]);
+        $this->handleArgv([]);
     }
 
     function it_parses_string() {
         $this->getConsole()->getOutput()->setEnableBuffering(true);
-        $this->parseString('');
+        $this->handleArgsString('');
     }
 
     function it_takes_environment() {
@@ -51,12 +51,12 @@ class ConsoleAppSpec extends ObjectBehavior {
 
     function it_switches_environment() {
         $this->setDebug(true);
-        $this->parseString('--env=prod');
+        $this->handleArgsString('--env=prod');
         $this->getEnvironment()->shouldBe('prod');
     }
 
     function it_does_not_switch_environment_if_environment_awareness_has_not_been_configured() {
-        $this->parseString('--env=prod');
+        $this->handleArgsString('--env=prod');
         $this->getEnvironment()->shouldBe('dev');
     }
 }

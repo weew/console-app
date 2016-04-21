@@ -14,15 +14,15 @@ interface IConsoleApp extends IApp {
     /**
      * @param array $argv
      */
-    function parseArgv(array $argv = null);
+    function handleArgv(array $argv = null);
 
     /**
      * @param array $args
      */
-    function parseArgs(array $args);
+    function handleArgs(array $args);
 
     /**
      * @param $string
      */
-    function parseString($string);
+    function handleArgsString($string);
 }
