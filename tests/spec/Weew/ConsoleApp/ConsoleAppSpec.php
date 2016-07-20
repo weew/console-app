@@ -3,7 +3,6 @@
 namespace tests\spec\Weew\ConsoleApp;
 
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 use Weew\Console\ContainerAware\Console;
 use Weew\Console\IConsole;
 use Weew\ConsoleApp\ConsoleApp;
@@ -56,6 +55,7 @@ class ConsoleAppSpec extends ObjectBehavior {
     }
 
     function it_does_not_switch_environment_if_environment_awareness_has_not_been_configured() {
+        $this->setDebug(false);
         $this->handleArgsString('--env=prod');
         $this->getEnvironment()->shouldBe('dev');
     }

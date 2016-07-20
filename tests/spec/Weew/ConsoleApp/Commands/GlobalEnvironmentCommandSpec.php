@@ -3,7 +3,6 @@
 namespace tests\spec\Weew\ConsoleApp\Commands;
 
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 use Weew\Console\IInput;
 use Weew\Console\IOutput;
 use Weew\ConsoleApp\Commands\GlobalEnvironmentCommand;

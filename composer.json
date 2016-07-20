@@ -1,6 +1,6 @@
 {
-    "name": "weew/php-console-app",
-    "description": "Integrates weew/php-app with weew/php-console",
+    "name": "weew/console-app",
+    "description": "Integrates weew/app with weew/console",
     "license": "MIT",
     "authors": [
         {
@@ -19,13 +19,13 @@
         }
     },
     "require": {
-        "weew/php-console-container-aware": "^1.0",
-        "weew/php-app": "^2.1"
+        "weew/console-container-aware": "^1.0",
+        "weew/app": "^2.1"
     },
     "require-dev": {
         "satooshi/php-coveralls": "^0.6.1",
         "phpspec/phpspec": "^2.4",
-        "weew/php-helpers-phpspec": "^1.0",
+        "weew/helpers-phpspec": "^1.0",
         "henrikbjorn/phpspec-code-coverage": "^2.0"
     }
 }
